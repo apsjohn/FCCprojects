@@ -1,0 +1,24 @@
+
+services:
+  web:
+    container_name: exercise-tracker-app  # Custom container name
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/exercise-tracker
+    depends_on:
+      - mongo
+    volumes:
+      - ./:/app # volume mount bind
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db # named volume
+
+
+volumes:                       # Declaring volumes
+  mongodb_data:               # This is required for named volumes
